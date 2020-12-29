@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Authentication
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,3 +8,27 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<div>
+    <a class="btn btn-dark"  asp-area="" asp-controller="Home" asp-action="Logout" style="float: right">Logout</a>
+</div>
+
+
+<h2>Claims</h2>
+
+<dl>
+    @foreach (var claim in User.Claims)
+    {
+        <dt>@claim.Type</dt>
+        <dd>@claim.Value</dd>
+    }
+</dl>
+
+<h2>Properties</h2>
+
+<dl>
+    @foreach (var prop in (await Context.AuthenticateAsync()).Properties.Items)
+    {
+        <dt>@prop.Key</dt>
+        <dd>@prop.Value</dd>
+    }
+</dl>
